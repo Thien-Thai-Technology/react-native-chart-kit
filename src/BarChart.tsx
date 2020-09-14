@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ViewStyle } from "react-native";
+import { View, ViewStyle, ScrollView } from "react-native";
 import { G, Rect, Svg, Text } from "react-native-svg";
 
 import AbstractChart, {
@@ -196,76 +196,78 @@ class BarChart extends AbstractChart<BarChartProps, BarChartState> {
 
     return (
       <View style={style}>
-        <Svg height={height} width={width}>
-          {this.renderDefs({
-            ...config,
-            ...this.props.chartConfig
-          })}
-          <Rect
-            width="100%"
-            height={height}
-            rx={borderRadius}
-            ry={borderRadius}
-            fill="url(#backgroundGradient)"
-          />
-          <G>
-            {withInnerLines
-              ? this.renderHorizontalLines({
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Svg height={height} width={width}>
+            {this.renderDefs({
+              ...config,
+              ...this.props.chartConfig
+            })}
+            <Rect
+              width="100%"
+              height={height}
+              rx={borderRadius}
+              ry={borderRadius}
+              fill="url(#backgroundGradient)"
+            />
+            <G>
+              {withInnerLines
+                ? this.renderHorizontalLines({
                   ...config,
                   count: segments,
                   paddingTop
                 })
-              : null}
-          </G>
-          <G>
-            {withHorizontalLabels
-              ? this.renderHorizontalLabels({
+                : null}
+            </G>
+            <G>
+              {withHorizontalLabels
+                ? this.renderHorizontalLabels({
                   ...config,
                   count: segments,
                   data: data.datasets[0].data,
                   paddingTop: paddingTop as number,
                   paddingRight: paddingRight as number
                 })
-              : null}
-          </G>
-          <G>
-            {withVerticalLabels
-              ? this.renderVerticalLabels({
+                : null}
+            </G>
+            <G>
+              {withVerticalLabels
+                ? this.renderVerticalLabels({
                   ...config,
                   labels: data.labels,
                   paddingRight: paddingRight as number,
                   paddingTop: paddingTop as number,
                   horizontalOffset: barWidth * this.getBarPercentage()
                 })
-              : null}
-          </G>
-          <G>
-            {this.renderBars({
-              ...config,
-              data: data.datasets[0].data,
-              paddingTop: paddingTop as number,
-              paddingRight: paddingRight as number
-            })}
-          </G>
-          <G>
-            {showValuesOnTopOfBars &&
+                : null}
+            </G>
+            <G>
+              {this.renderBars({
+                ...config,
+                data: data.datasets[0].data,
+                paddingTop: paddingTop as number,
+                paddingRight: paddingRight as number
+              })}
+            </G>
+            <G>
+              {showValuesOnTopOfBars &&
               this.renderValuesOnTopOfBars({
                 ...config,
                 data: data.datasets[0].data,
                 paddingTop: paddingTop as number,
                 paddingRight: paddingRight as number
               })}
-          </G>
-          <G>
-            {showBarTops &&
+            </G>
+            <G>
+              {showBarTops &&
               this.renderBarTops({
                 ...config,
                 data: data.datasets[0].data,
                 paddingTop: paddingTop as number,
                 paddingRight: paddingRight as number
               })}
-          </G>
-        </Svg>
+            </G>
+          </Svg>
+        </ScrollView>
       </View>
     );
   }

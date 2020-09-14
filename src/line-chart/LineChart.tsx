@@ -837,45 +837,46 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
 
     return (
       <View style={style}>
-        <Svg
-          height={height + (paddingBottom as number) + legendOffset}
-          width={width - (margin as number) * 2 - (marginRight as number)}
-        >
-          <Rect
-            width="100%"
-            height={height + legendOffset}
-            rx={borderRadius}
-            ry={borderRadius}
-            fill="url(#backgroundGradient)"
-            fillOpacity={transparent ? 0 : 1}
-          />
-          {this.props.data.legend &&
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+          <Svg
+            height={height + (paddingBottom as number) + legendOffset}
+            width={width - (margin as number) * 2 - (marginRight as number)}
+          >
+            <Rect
+              width="100%"
+              height={height + legendOffset}
+              rx={borderRadius}
+              ry={borderRadius}
+              fill="url(#backgroundGradient)"
+              fillOpacity={transparent ? 0 : 1}
+            />
+            {this.props.data.legend &&
             this.renderLegend(config.width, legendOffset)}
-          <G x="0" y={legendOffset}>
-            {this.renderDefs({
-              ...config,
-              ...chartConfig,
-              data: data.datasets
-            })}
-            <G>
-              {withHorizontalLines &&
+            <G x="0" y={legendOffset}>
+              {this.renderDefs({
+                ...config,
+                ...chartConfig,
+                data: data.datasets
+              })}
+              <G>
+                {withHorizontalLines &&
                 (withInnerLines
                   ? this.renderHorizontalLines({
-                      ...config,
-                      count: count,
-                      paddingTop,
-                      paddingRight
-                    })
+                    ...config,
+                    count: count,
+                    paddingTop,
+                    paddingRight
+                  })
                   : withOuterLines
-                  ? this.renderHorizontalLine({
+                    ? this.renderHorizontalLine({
                       ...config,
                       paddingTop,
                       paddingRight
                     })
-                  : null)}
-            </G>
-            <G>
-              {withHorizontalLabels &&
+                    : null)}
+              </G>
+              <G>
+                {withHorizontalLabels &&
                 this.renderHorizontalLabels({
                   ...config,
                   count: count,
@@ -885,26 +886,26 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
                   formatYLabel,
                   decimalPlaces: chartConfig.decimalPlaces
                 })}
-            </G>
-            <G>
-              {withVerticalLines &&
+              </G>
+              <G>
+                {withVerticalLines &&
                 (withInnerLines
                   ? this.renderVerticalLines({
-                      ...config,
-                      data: data.datasets[0].data,
-                      paddingTop: paddingTop as number,
-                      paddingRight: paddingRight as number
-                    })
+                    ...config,
+                    data: data.datasets[0].data,
+                    paddingTop: paddingTop as number,
+                    paddingRight: paddingRight as number
+                  })
                   : withOuterLines
-                  ? this.renderVerticalLine({
+                    ? this.renderVerticalLine({
                       ...config,
                       paddingTop: paddingTop as number,
                       paddingRight: paddingRight as number
                     })
-                  : null)}
-            </G>
-            <G>
-              {withVerticalLabels &&
+                    : null)}
+              </G>
+              <G>
+                {withVerticalLabels &&
                 this.renderVerticalLabels({
                   ...config,
                   labels,
@@ -912,18 +913,18 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
                   paddingRight: paddingRight as number,
                   formatXLabel
                 })}
-            </G>
-            <G>
-              {this.renderLine({
-                ...config,
-                ...chartConfig,
-                paddingRight: paddingRight as number,
-                paddingTop: paddingTop as number,
-                data: data.datasets
-              })}
-            </G>
-            <G>
-              {withShadow &&
+              </G>
+              <G>
+                {this.renderLine({
+                  ...config,
+                  ...chartConfig,
+                  paddingRight: paddingRight as number,
+                  paddingTop: paddingTop as number,
+                  data: data.datasets
+                })}
+              </G>
+              <G>
+                {withShadow &&
                 this.renderShadow({
                   ...config,
                   data: data.datasets,
@@ -931,9 +932,9 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
                   paddingTop: paddingTop as number,
                   useColorFromDataset: chartConfig.useShadowColorFromDataset
                 })}
-            </G>
-            <G>
-              {withDots &&
+              </G>
+              <G>
+                {withDots &&
                 this.renderDots({
                   ...config,
                   data: data.datasets,
@@ -941,9 +942,9 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
                   paddingRight: paddingRight as number,
                   onDataPointClick
                 })}
-            </G>
-            <G>
-              {withScrollableDot &&
+              </G>
+              <G>
+                {withScrollableDot &&
                 this.renderScrollableDot({
                   ...config,
                   ...chartConfig,
@@ -953,18 +954,19 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
                   onDataPointClick,
                   scrollableDotHorizontalOffset
                 })}
-            </G>
-            <G>
-              {decorator &&
+              </G>
+              <G>
+                {decorator &&
                 decorator({
                   ...config,
                   data: data.datasets,
                   paddingTop,
                   paddingRight
                 })}
+              </G>
             </G>
-          </G>
-        </Svg>
+          </Svg>
+        </ScrollView>
         {withScrollableDot && (
           <ScrollView
             style={StyleSheet.absoluteFill}
